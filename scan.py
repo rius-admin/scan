@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import requests
+from bs4 import Beautiful Soup
 from urllib.parse import urljoin, urlparse
 import os
 
