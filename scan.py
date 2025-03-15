@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import requests
-from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
 import os
 
@@ -13,7 +12,7 @@ def crawl_and_scan(base_url):
     visited_urls = set()  # Set untuk melacak URL yang sudah dikunjungi
     to_visit_urls = [base_url]  # Mulai dengan URL utama (base_url)
 
-    print(f"Memulai pemindaian dan crawling di {base_url}...\n")
+    print("Memulai pemindaian dan crawling di {base_url}...\n")
     
     while to_visit_urls:
         current_url = to_visit_urls.pop(0)  # Ambil URL yang belum dikunjungi
@@ -23,9 +22,9 @@ def crawl_and_scan(base_url):
         try:
             response = requests.get(current_url)
             if response.status_code == 200:
-                print(f"[+] Path ditemukan: {current_url} (Status Code: {response.status_code})")
+                print("[+] Path ditemukan: {current_url} (Status Code: {response.status_code})")
             else:
-                print(f"[-] Path tidak ditemukan: {current_url} (Status Code: {response.status_code})")
+                print("[-] Path tidak ditemukan: {current_url} (Status Code: {response.status_code})")
 
             visited_urls.add(current_url)  # Tandai URL sebagai telah dikunjungi
 
@@ -42,7 +41,7 @@ def crawl_and_scan(base_url):
                     to_visit_urls.append(next_url)  # Tambahkan ke daftar URL yang akan dikunjungi
 
         except requests.exceptions.RequestException as e:
-            print(f"[!] Error saat memindai {current_url}: {e}")
+            print("[!] Error saat memindai {current_url}: {e}")
 
 # Meminta input dari pengguna untuk target URL
 clear_screen()
