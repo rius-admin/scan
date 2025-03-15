@@ -19,20 +19,20 @@ def scan_path(base_url, path):
     try:
         response = requests.get(full_url, timeout=5)
         if response.status_code == 200:
-            return "{Fore.GREEN}[+] Path ditemukan: {full_url} (Status Code: {response.status_code}){Style.RESET_ALL}"
+            return f"{Fore.GREEN}[+] Path ditemukan: {full_url} (Status Code: {response.status_code}){Style.RESET_ALL}"
         else:
             return None
     except requests.exceptions.RequestException:
         return None
 
-def scan_paths(base_url, path_file="path.txt", max_threads=10):
+def scan_paths(base_url, path_file="path.txt", max_threads=13):
     """Membaca daftar path dari file dan melakukan scanning ke target website."""
     try:
         with open(path_file, "r") as file:
             # Menghapus spasi dan baris kosong
             paths = [line.strip() for line in file if line.strip()]
     except FileNotFoundError:
-        print(f"[!] File {path_file} tidak ditemukan.")
+        print("[!] File {path_file} tidak ditemukan.")
         return
 
     print("Memulai pemindaian path berdasarkan '{path_file}' di {base_url}...\n")
@@ -43,10 +43,11 @@ def scan_paths(base_url, path_file="path.txt", max_threads=10):
             if result:
                 print(result)
 
-# Main program
-print(" ")
+# Program utama
+print (" ") 
+print ("   terget.com ") 
 clear_screen()
-target_url = input("Masukkan target website (contoh: target.com): ").strip()
+target_url = input("   scan > ").strip()
 
 # Menambahkan skema (http://) jika belum ada
 if not target_url.startswith("http://") and not target_url.startswith("https://"):
