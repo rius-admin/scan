@@ -36,7 +36,8 @@ def scan_paths(base_url, path_file="path.txt", max_threads=13):
         return
 
     print("Memulai pemindaian path berdasarkan '{path_file}' di {base_url}...\n")
-
+    
+return f"{Fore.GREEN}[+] Path ditemukan: {full_url} (Status Code: {response.status_code}){Style.RESET_ALL}"
         results = executor.map(lambda path: scan_path(base_url, path), paths)
         for result in results:
             if result:
@@ -55,3 +56,5 @@ if not target_url.startswith("http://") and not target_url.startswith("https://"
 # Menambahkan tanda "/" di akhir URL jika belum ada
 if not target_url.endswith('/'):
     target_url += '/'
+
+print(f"Memulai pemindaian path berdasarkan '{path_file}' di {base_url}...\n")
