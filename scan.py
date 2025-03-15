@@ -1,13 +1,6 @@
-#!/usr/bin/env python
-
 import requests
-from urllib.parse import urljoin
 import os
-from colorama import init, Fore, Style
-from concurrent.futures import ThreadPoolExecutor
-
-# Inisialisasi colorama
-init(autoreset=True)
+from urllib.parse import urljoin
 
 def clear_screen():
     """Membersihkan layar terminal"""
@@ -19,42 +12,34 @@ def scan_path(base_url, path):
     try:
         response = requests.get(full_url, timeout=5)
         if response.status_code == 200:
-            return "{Fore.GREEN}[+] Path ditemukan: {full_url} (Status Code: {response.status_code}){Style.RESET_ALL}"
-        else:
-            return None
+            print(f"[+] Path ditemukan: {full_url} (Status Code: {response.status_code})")
     except requests.exceptions.RequestException:
-        return None
+        pass
 
-def scan_paths(base_url, path_file="path.txt", max_threads=13):
+def scan_paths(base_url, path_file="path.txt"):
     """Membaca daftar path dari file dan melakukan scanning ke target website."""
-    try:
-        with open(path_file, "r") as file:
-            # Menghapus spasi dan baris kosong
-            paths = [line.strip() for line in file if line.strip()]
-    except FileNotFoundError:
-        print("[!] File {path_file} tidak ditemukan.")
+    if not os.path.exists(path_file):
+        print(f"[!] File {path_file} tidak ditemukan.")
         return
 
-    print("Memulai pemindaian path berdasarkan '{path_file}' di {base_url}...\n")
-    
-return f"{Fore.GREEN}[+] Path ditemukan: {full_url} (Status Code: {response.status_code}){Style.RESET_ALL}"
-        results = executor.map(lambda path: scan_path(base_url, path), paths)
-        for result in results:
-            if result:
-                print(result)
+    with open(path_file, "r") as file:
+        paths = [line.strip() for line in file if line.strip()]
+
+    print(f"Memulai pemindaian path dari '{path_file}' di {base_url}...\n")
+    for path in paths:
+        scan_path(base_url, path)
 
 # Program utama
-print (" ") 
-print ("   terget.com ") 
 clear_screen()
-target_url = input("   scan > ").strip()
+print("Target: contoh.com") 
+target_url = input("Scan > ").strip()
 
 # Menambahkan skema (http://) jika belum ada
-if not target_url.startswith("http://") and not target_url.startswith("https://"):
+if not target_url.startswith(("http://", "https://")):
     target_url = "http://" + target_url
 
 # Menambahkan tanda "/" di akhir URL jika belum ada
 if not target_url.endswith('/'):
     target_url += '/'
 
-print(f"Memulai pemindaian path berdasarkan '{path_file}' di {base_url}...\n")
+scan_paths(target_url)
