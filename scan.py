@@ -19,7 +19,7 @@ def scan_path(base_url, path):
     try:
         response = requests.get(full_url, timeout=5)
         if response.status_code == 200:
-            return f"{Fore.GREEN}[+] Path ditemukan: {full_url} (Status Code: {response.status_code}){Style.RESET_ALL}"
+            return "{Fore.GREEN}[+] Path ditemukan: {full_url} (Status Code: {response.status_code}){Style.RESET_ALL}"
         else:
             return None
     except requests.exceptions.RequestException:
@@ -37,7 +37,6 @@ def scan_paths(base_url, path_file="path.txt", max_threads=13):
 
     print("Memulai pemindaian path berdasarkan '{path_file}' di {base_url}...\n")
 
-    with ThreadPoolExecutor(max_threads=max_threads) as executor:
         results = executor.map(lambda path: scan_path(base_url, path), paths)
         for result in results:
             if result:
@@ -56,6 +55,3 @@ if not target_url.startswith("http://") and not target_url.startswith("https://"
 # Menambahkan tanda "/" di akhir URL jika belum ada
 if not target_url.endswith('/'):
     target_url += '/'
-
-# Mulai pemindaian path berdasarkan file path.txt
-scan_paths(target_url)
