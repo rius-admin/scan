@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import requests
-from bs4 import Beautiful Soup
+from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
 import os
 
@@ -21,7 +21,7 @@ def crawl_and_scan(base_url):
             continue  # Lewati URL yang sudah dikunjungi
 
         try:
-            response = requests.get(current_url)
+            response = requests.get(current_url, timeout=10)  # Tambahkan timeout agar tidak menggantung
             if response.status_code == 200:
                 print("[+] Path ditemukan: {current_url} (Status Code: {response.status_code})")
             else:
@@ -45,8 +45,9 @@ def crawl_and_scan(base_url):
             print("[!] Error saat memindai {current_url}: {e}")
 
 # Meminta input dari pengguna untuk target URL
+print (" ") 
 clear_screen()
-target_url = input("Masukkan target website (contoh: target.com): ")
+target_url = input("Masukkan target website (contoh: target.com): ").strip()
 
 # Menambahkan skema (http://) dan domain yang valid
 if not target_url.startswith("http://") and not target_url.startswith("https://"):
